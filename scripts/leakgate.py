@@ -63,7 +63,7 @@ _ENTROPY_CANDIDATE = re.compile(r"\b[A-Za-z0-9+/=_-]{32,}\b")
 _HEX_DIGEST = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
 _SKIP_DIR_PARTS = {
-    ".git", ".venv", "node_modules", ".next", "__pycache__",
+    ".git", ".venv", "node_modules", ".next", "_next", "__pycache__",
     ".hypothesis", ".mypy_cache", ".ruff_cache", ".pytest_cache", ".egg-info",
 }
 _SKIP_FILE_NAMES = {"package-lock.json"}
