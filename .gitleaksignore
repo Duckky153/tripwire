@@ -1,0 +1,5 @@
+# tripwire — vetted gitleaks false positive (no real secret).
+# generic-api-key match is a DELIBERATE test fixture: tests/test_leakgate.py plants a
+# high-entropy string ("...assembled at runtime") to verify the leak-gate's own detector.
+# Verified 2026-06-17. Commit-less relative fingerprint = relocation/rewrite-safe.
+tests/test_leakgate.py:generic-api-key:89

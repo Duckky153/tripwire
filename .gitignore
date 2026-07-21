@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+dashboard/node_modules/
+dashboard/out/
+dashboard/.next/
+runs/custom/
+.env
+.env.*
+.DS_Store
+# Local code-intelligence tooling (GitNexus) — not part of the public artifact
+.gitnexus
+.gitnexus/
+/.claude/
+/CLAUDE.md
+/AGENTS.md
