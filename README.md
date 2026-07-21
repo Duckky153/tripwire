@@ -63,7 +63,7 @@ scripts/         leakgate.py (independent leak scanner) · gen_taxonomy_md.py
 
 ## Upstream contribution
 
-tripwire's policy core is also packaged as a standalone **Guardrails Hub validator** (`validators/tool_call_policy/`). Its submission status is reported verbatim — see `validators/tool_call_policy/SUBMISSION.md`. A Hub validator is reviewed and published by the Guardrails team; this repo says **"submitted"** until they publish it, then **"published"**, with the real URL. It is not described as a "merged PR".
+tripwire's policy core is also packaged as a standalone **Guardrails Hub validator** (`validators/tool_call_policy/`) — a validator written for the Hub, **not yet submitted**. Its status is tracked verbatim in `validators/tool_call_policy/SUBMISSION.md` (`not submitted` → `submitted` → `published`). A Hub validator is reviewed and published by the Guardrails team; it is not described as a "merged PR" or as an accepted contribution.
 
 ## License
 
