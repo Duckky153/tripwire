@@ -82,7 +82,7 @@ by-construction guarantee at the action layer and the tamper-evident audit trail
 ## Words this repo does not use until earned
 
 - **"continuous"** — the engine is on-demand and nightly-capable. A scheduled smoke runner exists (`.github/workflows/smoke.yml`) but it does not auto-commit snapshots, so the repo does not claim "continuous red-teaming" until ≥2 dated committed snapshots from a schedule exist.
-- **"merged PR"** for the Guardrails Hub validator — a Hub validator is reviewed and published by the Guardrails team as its own repo. Status is **"submitted"** until they publish it, then **"published"**, with the real URL. See `validators/tool_call_policy/SUBMISSION.md`.
+- **"merged PR"** for the Guardrails Hub validator — a Hub validator is reviewed and published by the Guardrails team as its own repo. Status is **"not yet submitted"** until it is submitted, then **"submitted"**, then **"published"** once the team publishes it, with the real URL. See `validators/tool_call_policy/SUBMISSION.md`.
 - **"production"**, **"formally verified"**, any user/adoption count — not made.
 
 ## Leak-safety (scrutiny-grade; by construction, not assertion)

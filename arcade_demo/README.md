@@ -63,7 +63,7 @@ and it declares **only** the one scope it needs (`refund:write`) — least privi
 ## The OAuth consent step is HUMAN-ONLY
 
 When a tool requires auth and no token exists yet, Arcade returns an **authorization URL**.
-Completing consent is a **human action**, never the agent's or the builder's:
+Completing consent is a **human action**, never the agent's:
 
 1. The agent/runtime surfaces the authorization URL Arcade returns.
 2. **A person** opens that URL in their own browser.
