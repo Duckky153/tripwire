@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/tripwire/schema/run-report-v1.json",
+  "title": "tripwire run report v1",
+  "description": "The write/read contract between the Python engine and the dashboard. Count-agnostic: matrix rows derive from the catalog, never a literal class count. All rollups are pre-computed by the engine; the dashboard renders, never re-aggregates.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "report_hash", "provenance", "taxonomy",
+    "matrix", "rollups", "redaction_attestation", "audit", "status"
+  ],
+  "properties": {
+    "schema_version": { "const": "run-report-v1" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "report_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_commit", "seed", "reproducible_cmd", "engine_version", "mode", "generated_at"],
+      "properties": {
+        "git_commit": { "type": "string" },
+        "seed": { "type": "integer" },
+        "reproducible_cmd": { "type": "string" },
+        "engine_version": { "type": "string" },
+        "mode": { "enum": ["gated", "ungated"] },
+        "generated_at": { "type": "string" }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalog_hash", "classes"],
+      "properties": {
+        "catalog_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "classes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "category", "severity", "applicability", "crosswalk", "description", "example_attack", "expected_fail_closed_behavior", "detection_signal"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "category": { "type": "string" },
+              "severity": { "enum": ["critical", "high", "medium", "low"] },
+              "applicability": { "type": "string" },
+              "crosswalk": { "type": "array", "items": { "type": "string" } },
+              "description": { "type": "string" },
+              "example_attack": { "type": "string" },
+              "expected_fail_closed_behavior": { "type": "string" },
+              "detection_signal": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["class_id", "surface", "verdicts", "cell_verdict", "exercised_n", "attempts"],
+        "properties": {
+          "class_id": { "type": "string" },
+          "surface": { "enum": ["action", "output", "na"] },
+          "verdicts": {
+            "type": "object",
+            "additionalProperties": { "type": "integer", "minimum": 0 }
+          },
+          "cell_verdict": { "enum": ["pass", "refused", "blocked", "error", "leaked", "allowed_unsafe", "not_applicable"] },
+          "exercised_n": { "type": "integer", "minimum": 0 },
+          "attempts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["attempt_id", "origin", "mode", "verdict", "audit_ref"],
+              "properties": {
+                "attempt_id": { "type": "string" },
+                "origin": { "enum": ["hand-written", "templated"] },
+                "mode": { "enum": ["gated", "ungated"] },
+                "verdict": { "type": "string" },
+                "audit_ref": {
+                  "oneOf": [
+                    { "type": "null" },
+                    { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rollups": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defended", "exercised", "defense_rate", "na_count", "error_count", "by_severity", "by_surface"],
+      "properties": {
+        "defended": { "type": "integer", "minimum": 0 },
+        "exercised": { "type": "integer", "minimum": 0 },
+        "defense_rate": { "oneOf": [{ "type": "null" }, { "type": "number", "minimum": 0, "maximum": 1 }] },
+        "na_count": { "type": "integer", "minimum": 0 },
+        "error_count": { "type": "integer", "minimum": 0 },
+        "by_severity": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["defended", "exercised"],
+            "properties": {
+              "defended": { "type": "integer", "minimum": 0 },
+              "exercised": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "by_surface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "output"],
+          "description": "Defense decomposed by surface: action = the by-construction gate guarantee; output = detection-based defense-in-depth. Reported separately, never conflated.",
+          "properties": {
+            "action": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["defended", "exercised"],
+              "properties": {
+                "defended": { "type": "integer", "minimum": 0 },
+                "exercised": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "output": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["defended", "exercised"],
+              "properties": {
+                "defended": { "type": "integer", "minimum": 0 },
+                "exercised": { "type": "integer", "minimum": 0 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "redaction_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent_scan", "scanner"],
+      "properties": {
+        "independent_scan": { "type": "boolean" },
+        "scanner": { "type": "string" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chain_verified", "record_count", "file"],
+      "properties": {
+        "chain_verified": { "oneOf": [{ "type": "null" }, { "type": "boolean" }] },
+        "record_count": { "type": "integer", "minimum": 0 },
+        "file": { "oneOf": [{ "type": "null" }, { "type": "string" }] }
+      }
+    },
+    "status": { "enum": ["complete", "partial"] }
+  }
+}

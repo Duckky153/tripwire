@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tripwire-agent-gate"
+version = "0.1.0"
+description = "Adversarial test harness + independent fail-closed action gate for tool-using agents."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = ["pyyaml>=6.0", "jsonschema>=4.21"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "hypothesis>=6.100", "ruff>=0.4", "mypy>=1.10", "types-PyYAML"]
+attack-llm = ["deepteam"]
+validator = ["guardrails-ai>=0.5"]
+demo = ["arcade-mcp"]
+
+[project.scripts]
+tripwire = "tripwire.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tripwire"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+"arcade_demo/test_server.py" = ["S101", "S106"]  # asserts + dummy sandbox token literals
+"validators/**/tests/*" = ["S101"]               # standalone published package; pytest asserts
+"tripwire/taxonomy/catalog_data.py" = ["E501"]  # prose data strings; wrapping hurts review
+"tripwire/attack/corpus.py" = ["E501"]          # attack payload strings; wrapping hurts review
+
+[tool.mypy]
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["yaml", "jsonschema"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

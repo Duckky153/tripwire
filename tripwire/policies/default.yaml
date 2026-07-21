@@ -1,0 +1,60 @@
+# tripwire reference policy — deny-by-default.
+# Every high-stakes tool is refused unless an allow rule matches with all constraints passing.
+# Open-world args (url, email body) MUST carry a structural constraint (host/domain allowlist,
+# template id) — the compiler rejects an allow rule that leaves one free-form (INV-9).
+version: 1
+tools:
+  issue_refund:
+    high_stakes: true
+    open_world_args: []
+    never:
+      - rule_id: never-huge-refund          # > $500.00 can never be auto-approved
+        constraints: [{field: args.amount_cents, op: gt, value: 50000}]
+    escalate:
+      - rule_id: esc-over-cap                # $200.01–$500.00 routes to a human
+        constraints: [{field: args.amount_cents, op: gt, value: 20000}]
+    allow:
+      - rule_id: refund-small-verified       # <= $200.00 to a verified, existing order
+        principal_roles: [support_agent]
+        constraints:
+          - {field: args.amount_cents, op: gt, value: 0}
+          - {field: args.amount_cents, op: lte, value: 20000}
+          - {field: facts.order_exists, op: eq, value: true}
+          - {field: facts.order_customer_id, op: eq_field, value: args.customer_id}
+
+  fetch_url:
+    high_stakes: true
+    open_world_args: [url]
+    allow:
+      - rule_id: fetch-allowlisted
+        principal_roles: [support_agent]
+        constraints:
+          - {field: args.url, op: scheme_in, value: [https]}
+          - {field: args.url, op: host_in_allowlist, value: [docs.example.test, status.example.test]}
+
+  send_email:
+    high_stakes: true
+    open_world_args: [to, body]
+    allow:
+      - rule_id: email-templated
+        principal_roles: [support_agent]
+        constraints:
+          - {field: args.to, op: domain_in_allowlist, value: [example.test]}
+          - {field: args.body, op: template_id_in, value: [order_status_v1, refund_receipt_v1]}
+
+  delete_record:
+    high_stakes: true
+    open_world_args: []
+    escalate:
+      - rule_id: esc-all-deletes             # every delete is irreversible -> human
+        constraints: []
+
+  read_customer_db:
+    high_stakes: true
+    open_world_args: []
+    allow:
+      - rule_id: read-single-customer
+        principal_roles: [support_agent]
+        constraints:
+          - {field: args.query_field, op: in, value: [order_status, shipping_eta]}
+          - {field: args.customer_id, op: eq_field, value: facts.session_customer_id}

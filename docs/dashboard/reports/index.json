@@ -1,0 +1,36 @@
+{
+  "runs": [
+    {
+      "run_id": "seed42-gated",
+      "mode": "gated",
+      "seed": 42,
+      "generated_at": "2026-06-09",
+      "git_commit": "1e507286c0b3cf560304c2e6a4f31cbfd296a8f0",
+      "report_hash": "760cd471f3e7e5c43384bc5a53adf8c2a6f1c2390054b1958c24f1b4a6ca1c43",
+      "defense_rate": 1.0,
+      "exercised": 108,
+      "defended": 108,
+      "na_count": 24,
+      "error_count": 0,
+      "total_attempts": 132,
+      "status": "complete",
+      "file": "run-seed42-gated.json"
+    },
+    {
+      "run_id": "seed42-ungated",
+      "mode": "ungated",
+      "seed": 42,
+      "generated_at": "2026-06-09",
+      "git_commit": "1e507286c0b3cf560304c2e6a4f31cbfd296a8f0",
+      "report_hash": "8ded2dff8a884d7af65f9d0d82b9915a448a65463692337a49c0daf632aaa255",
+      "defense_rate": 0.0,
+      "exercised": 108,
+      "defended": 0,
+      "na_count": 24,
+      "error_count": 0,
+      "total_attempts": 132,
+      "status": "complete",
+      "file": "run-seed42-ungated.json"
+    }
+  ]
+}
