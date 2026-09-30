@@ -53,7 +53,7 @@ class ToolCall:
         # Freeze args as a read-only mapping so the call cannot be mutated post-construction.
         object.__setattr__(self, "args", MappingProxyType(dict(self.args)))
         # Hash EAGERLY: unserializable args fail here, at the adapter boundary — never
-        # inside the decision path (Codex r1: a set() in args crashed decide()).
+        # inside the decision path (review finding: a set() in args crashed decide()).
         try:
             computed = payload_hash(self.tool, self.args)
         except (TypeError, ValueError) as exc:

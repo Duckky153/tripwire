@@ -19,7 +19,7 @@ from tripwire.gate.types import Decision, ToolCall, Verdict
 _MISSING = object()
 
 # Strict single-@ email shape: exactly one @, no @ in local/domain part, and \Z (not $) so a
-# trailing newline cannot smuggle past the allowlist (Codex r1 + r2 findings).
+# trailing newline cannot smuggle past the allowlist (adversarial-review findings).
 _EMAIL_SHAPE = re.compile(r"\A[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Za-z]{2,})\Z")
 # Membership ops require a list/tuple value; a scalar would collapse to substring semantics.
 _MEMBERSHIP_OPS = frozenset(
@@ -141,7 +141,7 @@ def _deny(
 
 def decide(request: ToolCall, policy: CompiledPolicy, facts: Mapping[str, Any]) -> Decision:
     verdict = Verdict.DENY  # noqa: F841 — FIRST STATEMENT (spec-required shape). No else:allow below.
-    req_hash = _safe_hash(request)  # computed ONCE, exception-proof (Codex r1: totality)
+    req_hash = _safe_hash(request)  # computed ONCE, exception-proof (review finding: totality)
     try:
         tool_policy = policy.tools.get(request.tool)
         if tool_policy is None:

@@ -62,7 +62,7 @@ class Dispatcher:
 
     Tokens are HMAC-bound (tool | payload_hash | nonce) to a per-dispatcher secret key, so
     a token constructed outside `mint()` cannot verify even if every field is copied and
-    the (name-mangled) live set is reached (Codex r1 BLOCKER). Residual honesty note: pure
+    the (name-mangled) live set is reached (blocker-level review finding). Residual note: pure
     in-process Python cannot stop a debugger-level attacker from extracting the key — the
     guarantee is that no ACCIDENTAL or merely-clever path executes a tool ungated; the
     process boundary assumption is stated in THREAT-MODEL.md.
@@ -143,7 +143,7 @@ class PEP:
 
     def attempt(self, call: ToolCall) -> ToolResult | Refusal:
         """Fail-closed wrapper: NO exception escapes; every failure is a DENY refusal
-        (Codex r1: facts-provider and audit errors previously bubbled out as exceptions)."""
+        (review finding: facts-provider and audit errors previously bubbled out as exceptions)."""
         try:
             return self.__attempt(call)
         except RefusalError as exc:

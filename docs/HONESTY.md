@@ -95,14 +95,16 @@ layers enforce this:
    must match `^[A-Za-z0-9_.:-]{1,64}$`); a property test injects synthetic PII/secret
    sentinels and asserts they never reach a record.
 2. **An independent CI scanner** (`scripts/leakgate.py`) — separate code from the writer —
-   sweeps the whole tree for personal terms, PII patterns, and secret-shaped strings. Its
-   result, not the writer's self-attestation, is the leak-safety evidence of record; the
-   report writer refuses to emit a report the scanner would flag.
+   sweeps the whole tree for PII patterns (emails, SSN/phone shapes), absolute
+   home-directory paths, and secret-shaped strings, plus an optional banned-term list kept
+   in a private file outside the repository (see `docs/CONTRIBUTING.md`). Its result, not
+   the writer's self-attestation, is the leak-safety evidence of record; the report writer
+   refuses to emit a report the scanner would flag.
 
-The target under test is a generic mock support/ops agent — explicitly never a personal or
-job-application bot, and it carries no real identity data. Enabling the optional LLM judge or
-DeepTeam attack generation egresses request content to the configured model provider —
-relevant if you wrap a non-mock agent.
+The target under test is a generic mock support/ops agent — never an assistant acting on
+anyone's real accounts — and it carries no real identity data. Enabling the optional LLM
+judge or DeepTeam attack generation egresses request content to the configured model
+provider — relevant if you wrap a non-mock agent.
 
 ## Provenance
 

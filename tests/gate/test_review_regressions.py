@@ -1,4 +1,4 @@
-"""Regression tests for Codex adversarial-review round 1 findings (all exploit-verified).
+"""Regression tests for the first adversarial-review round (every finding exploit-verified).
 
 Each test replicates the reviewer's exact exploit and pins the fix.
 """

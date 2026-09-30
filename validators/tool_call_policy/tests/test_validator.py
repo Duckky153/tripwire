@@ -157,7 +157,7 @@ def test_wrapper_fail_on_unparseable_json() -> None:
     assert isinstance(v.validate("{not json", {}), FailResult)
 
 
-# ---- Codex round-2 regression tests ------------------------------------------------------
+# ---- Review round-2 regression tests -----------------------------------------------------
 def test_membership_op_scalar_value_fails_closed() -> None:
     bad = {"tools": {"send_email": {"open_world_args": ["body"], "allow": [
         {"rule_id": "r", "principal_roles": ["support_agent"], "constraints": [

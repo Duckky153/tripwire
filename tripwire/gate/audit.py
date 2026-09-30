@@ -22,7 +22,7 @@ from tripwire.gate.types import Decision, JudgeVote, ToolCall, Verdict, canonica
 
 GENESIS = "GENESIS"
 
-# TYPED allowlist (Codex r1: an attacker putting a string on a "safe" key leaked it
+# TYPED allowlist (review finding: an attacker putting a string on a "safe" key leaked it
 # verbatim). A value passes in clear ONLY if its key is allowlisted AND its value matches
 # the key's expected shape; everything else is masked. Free-form strings NEVER pass.
 _NUMERIC_KEYS = frozenset({"amount_cents"})

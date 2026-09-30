@@ -10,7 +10,7 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.9"
 dependencies = ["guardrails-ai>=0.5.0"]
-authors = [{ name = "Dakshit Raj" }]
+authors = [{ name = "tripwire contributors" }]
 keywords = ["guardrails", "validator", "agent", "tool-use", "authorization", "fail-closed"]
 
 [project.optional-dependencies]
