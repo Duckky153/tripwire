@@ -260,7 +260,7 @@
         <span class="l micro">audit records, chain verified</span>
       </div>
       <div class="strap-cell">
-        <span class="n">167</span>
+        <span class="n">178</span>
         <span class="l micro">tests passing</span>
       </div>
     </div>
@@ -403,7 +403,8 @@
       <div>
         <p class="sec-lede">
           Every number here is copied straight from two committed snapshots, both deterministic
-          and byte-reproducible from <code>--seed 42</code>, both validated against the run-report
+          and reproducible from <code>--seed 42</code> (the audit log byte for byte; the reports
+          differ only in the commit hash they record), both validated against the run-report
           schema. The engine runs offline in about a second with no network and no LLM in the
           default path.
         </p>
@@ -565,7 +566,7 @@
         <p class="foot-meta">
           attack &rarr; agent obeys &rarr; propose &rarr; PDP deny-by-default &rarr; PEP token &rarr; act | refuse+escalate &rarr; audit<br><br>
           gated 108/108 &middot; ungated 0/108 &middot; action 87/87 &middot; disclosure 21/21<br>
-          114 audit records &middot; chain verified true &middot; 167 tests<br>
+          114 audit records &middot; chain verified true &middot; 178 tests<br>
           audit head &nbsp;<span style="color:var(--ink-2)">7d92ac7&hellip;f6bd447</span><br>
           snapshot: seed 42 &middot; run-seed42-gated.json<br>
           Guardrails Hub validator: not yet submitted

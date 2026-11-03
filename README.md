@@ -2,6 +2,8 @@
 
 **An adversarial test harness + an independent fail-closed action gate for tool-using agents. No high-stakes action runs without an explicit matching policy rule — ambiguity always refuses — and that property is verified by property tests, not asserted.**
 
+Live results: [landing page](https://duckky153.github.io/tripwire/) and [vulnerability-matrix dashboard](https://duckky153.github.io/tripwire/dashboard/) (static, rendered from the committed seed-42 snapshots).
+
 tripwire has two halves around one contract:
 
 1. **Attack engine (offense)** — runs a deterministic, seed-reproducible corpus across a frozen catalog of **44 vulnerability classes** (prompt injection, jailbreaks, tool/function abuse, data exfiltration, unauthorized actions, RAG poisoning, multi-turn social engineering, plugin/supply-chain, identity, governance, …) against a tool-using agent, and produces a **vulnerability matrix + trend report**.
